@@ -1,0 +1,1 @@
+{"routes":[{"path":"/","title":"首頁"},{"path":"/projects","title":"作品庫"},{"path":"/learn","title":"學習角"},{"path":"/studio","title":"工作室"},{"path":"/compare","title":"創作歷程"},{"path":"/oauth/callback","title":"登入回呼"},{"path":"/dev/theme-lab","title":"主題實驗室"}]}
