@@ -148,6 +148,7 @@ const config: ExpoConfig = {
   experiments: {
     typedRoutes: true,
     reactCompiler: true,
+    baseUrl: process.env.EXPO_BASE_URL ?? "",
   },
 };
 

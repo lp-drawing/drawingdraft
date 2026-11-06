@@ -48,5 +48,12 @@
 
 ## 9. Expo Web 靜態輸出與 GitHub 交付
 
-- [x] 專案沿用 Expo Web／Metro 與 `output: "static"` 產生可供靜態網站服務的 Expo Web 輸出，並提供完整、未推送到任何使用者 GitHub 儲存庫的專案原始碼 ZIP 與獨立 Web `dist/` ZIP。
+- [x] 專案沿用 Expo Web／Metro 與 `output: "static"` 產生可供靜態網站服務的 Expo Web 輸出，並提供完整原始碼 ZIP 與獨立 Web `dist/` ZIP；經使用者授權後，原始碼快照已推送至 `lp-drawing/drawingdraft`，不改動 Manus 專案的 remote。
 - [x] `/manus-routes.json` 以 HTTP 200 回傳靜態 JSON，並列出根首頁、作品庫、學習角、工作室、歷程比較、OAuth callback 和既有開發主題頁路由。
+
+## 10. GitHub Pages 部署
+
+- [ ] `lp-drawing/drawingdraft` 的 GitHub Pages 以 GitHub Actions 為發布來源，部署墨芽靜態網站並可透過 `https://lp-drawing.github.io/drawingdraft/` 存取。
+- [ ] GitHub Actions 在 `main` 更新及手動觸發時，以 `pnpm 9.12.0` 安裝鎖定套件並執行 Expo Web 靜態建置，加入 `.nojekyll`，上傳 `dist/` artifact 後部署 Pages。
+- [ ] 生產建置以 `EXPO_BASE_URL=/drawingdraft` 設定 `experiments.baseUrl`；未設定此值時，現有 Preview 與根路徑 Web 建置仍使用空 base path。
+- [ ] 頁面、圖片、JavaScript 及 CSS 資源均能在 `/drawingdraft/` 子路徑載入，Expo Router 已匯出的首頁、作品庫、學習角、工作室、比較與 callback 靜態頁可由其路徑開啟。

@@ -58,7 +58,7 @@
 
 沿用紙本暖白、炭墨、苔綠、既有品牌圖標及低挫折學習語氣。瀏覽器操作以滑鼠、觸控和鍵盤可達為目標，作品匯出在 Web 端走瀏覽器下載／分享退路。作品存在目前瀏覽器的本機儲存，和同一學生手機上的作品不會自動同步；此版本不增加登入、雲端同步或公開社群作品牆。
 
-Expo Web 靜態輸出沿用 `app.config.ts` 中 Metro bundler 與 `output: "static"`，保留既有根頁、作品庫、學習角、工作室、歷程比較及 OAuth callback 路由，新增並核對靜態 `public/manus-routes.json`。提供可上傳到使用者自有 GitHub 的完整原始碼和建置命令；本次不登入、建立或推送任何 GitHub 儲存庫，也不改變本 App 專案的 Manus 管理 Git canonical。
+Expo Web 靜態輸出沿用 `app.config.ts` 中 Metro bundler 與 `output: "static"`，保留既有根頁、作品庫、學習角、工作室、歷程比較及 OAuth callback 路由，新增並核對靜態 `public/manus-routes.json`。使用者已授權把程式碼放到公開 GitHub 儲存庫 `lp-drawing/drawingdraft`；部署時保留此 App 專案的 Manus 管理 Git canonical，GitHub 是另行推送和發布的目的地。
 
 ### 網頁版模組與責任
 
@@ -67,7 +67,14 @@ Expo Web 靜態輸出沿用 `app.config.ts` 中 Metro bundler 與 `output: "stat
 - `app/(tabs)/index.tsx`、`projects.tsx`、`learn.tsx`、`studio.tsx`、`compare.tsx`：復用產品行為並拓寬桌面布局，工作室把紙張畫布和控制區並排。
 - `public/manus-routes.json`：聲明 Expo Router 所有頁面路由；原有 `assets/images/favicon.png` 保持為網站圖示。
 - `lib/studio.ts`、`components/studio/sketch-canvas.tsx`：保持共用作品結構、本機儲存與 SVG 繪畫資料；不另建瀏覽器帳戶或雲端資料庫。
-- `pnpm exec expo export --platform web` 產生靜態網站輸出 `dist/`；此次分別提供完整 Expo 原始碼 ZIP 與獨立的靜態 `dist/` ZIP。原始碼 ZIP 可供使用者上傳自己的 GitHub。若選擇 GitHub Pages 子路徑發佈，需依 repository 名稱設定 base path；本次尚無儲存庫名稱，因此不預設該路徑。
+- `pnpm exec expo export --platform web` 產生靜態網站輸出 `dist/`；此次分別提供完整 Expo 原始碼 ZIP 與獨立的靜態 `dist/` ZIP。GitHub Pages 的子路徑由 `EXPO_BASE_URL=/drawingdraft` 設定；環境變數省略時，Preview 和一般根路徑輸出維持空 base path。
+
+### GitHub Pages 部署方式
+
+- 選用 GitHub Pages 而非 Vercel：目前儲存庫已公開且 Expo 專案使用 `output: "static"`，不需常駐伺服器。
+- `app.config.ts` 以 `experiments.baseUrl` 使用 `EXPO_BASE_URL`，GitHub Actions 建置時設為 `/drawingdraft`，使站點 `https://lp-drawing.github.io/drawingdraft/` 下的頁面路徑與資產網址帶有正確子路徑。
+- `.github/workflows/deploy-pages.yml` 在 `main` 更新或手動觸發時安裝固定 pnpm、執行 `pnpm build:web`、建立 `.nojekyll`、上傳 `dist/` artifact 並部署到 Pages；Pages 發布來源設為 GitHub Actions。
+- 部署動作只讀取程式碼並使用最小 Pages/OIDC 權限；作品資料仍保存在訪客瀏覽器本機，不引入新的伺服器或使用者資料服務。
 
 
 ## 已落實的網頁版補充模組

@@ -20,11 +20,17 @@ pnpm build:web
 
 網站檔案輸出到 `dist/`，可由支援靜態網站的主機或 GitHub Pages 部署。`public/manus-routes.json` 列出網站頁面路由。
 
-## 上傳到 GitHub
+## GitHub Pages 部署
 
-將專案原始碼新增至自己的 GitHub repository；不要上傳 `.env` 或其他私密設定。GitHub Pages 的發布方式取決於 repository 網址：`<帳號>.github.io` 可使用根路徑，`<帳號>.github.io/<repository>/` 則是子路徑。子路徑需要依 repository 名稱設定 Expo Web base path，再建置靜態輸出；此專案尚未收到 repository 名稱，故未硬編碼子路徑或加入只適用於單一倉庫的部署工作流程。
+墨芽程式碼位於 [`lp-drawing/drawingdraft`](https://github.com/lp-drawing/drawingdraft)。GitHub Actions workflow 會在 `main` 有更新時自動建置並部署，也可從儲存庫的 **Actions** 頁手動執行 `Deploy to GitHub Pages`。首次部署完成後，網站網址是 [`https://lp-drawing.github.io/drawingdraft/`](https://lp-drawing.github.io/drawingdraft/)；部署狀態可在 Actions 工作流程查看。
 
-原始碼 ZIP 不包含由建置產生的 `dist/`；執行 `pnpm build:web` 即可在專案根目錄產生。此次另提供獨立的 Web 靜態輸出 ZIP。這些檔案可供你自行加入 GitHub 或靜態主機；我不會代替你建立 GitHub repository、推送程式碼或發佈網站。
+此 repository site 位於 `/drawingdraft/` 子路徑，workflow 會以 `EXPO_BASE_URL=/drawingdraft` 建置。如要在本機重現 GitHub Pages 版本，可執行：
+
+```sh
+EXPO_BASE_URL=/drawingdraft pnpm build:web
+```
+
+一般本機預覽使用 `pnpm dev:metro`；環境變數未設定時，路由和靜態資源會使用網站根路徑。不要把 `.env` 或私密設定加入公開 repository。原始碼 ZIP 不包含建置產物 `dist/`，可執行 `pnpm build:web` 產生；另有獨立的 Web 靜態輸出 ZIP。
 
 ## 作品資料
 
