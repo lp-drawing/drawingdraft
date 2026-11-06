@@ -33,7 +33,6 @@
 - [x] 使用者能匯出黑白作品圖。
 - [x] 使用者能匯出含創作歷程的圖卡，方便提交作業或分享。
 
-
 ## 7. 桌面與行動瀏覽器版
 
 - [ ] 瀏覽器開啟首頁、作品庫、學習角、工作室、歷程比較和 OAuth callback 路由時，均呈現墨芽繁體中文介面；桌面寬螢幕顯示品牌側欄與頁首，窄螢幕保留觸控友好的行動分頁導覽。
@@ -53,7 +52,7 @@
 
 ## 10. GitHub Pages 部署
 
-- [ ] `lp-drawing/drawingdraft` 的 GitHub Pages 以 GitHub Actions 為發布來源，部署墨芽靜態網站並可透過 `https://lp-drawing.github.io/drawingdraft/` 存取。
-- [ ] GitHub Actions 在 `main` 更新及手動觸發時，以 `pnpm 9.12.0` 安裝鎖定套件並執行 Expo Web 靜態建置，加入 `.nojekyll`，上傳 `dist/` artifact 後部署 Pages。
-- [ ] 生產建置以 `EXPO_BASE_URL=/drawingdraft` 設定 `experiments.baseUrl`；未設定此值時，現有 Preview 與根路徑 Web 建置仍使用空 base path。
-- [ ] 頁面、圖片、JavaScript 及 CSS 資源均能在 `/drawingdraft/` 子路徑載入，Expo Router 已匯出的首頁、作品庫、學習角、工作室、比較與 callback 靜態頁可由其路徑開啟。
+- [x] `lp-drawing/drawingdraft` 的 GitHub Pages 以 GitHub Actions 為發布來源，部署墨芽靜態網站並可透過 `https://lp-drawing.github.io/drawingdraft/` 存取。
+- [x] GitHub Actions 在 `main` 更新及手動觸發時，以 `pnpm 9.12.0` 安裝鎖定套件並執行 Expo Web 靜態建置，加入 `.nojekyll`，上傳 `dist/` artifact 後部署 Pages。
+- [x] 生產建置以 `EXPO_BASE_URL=/drawingdraft` 設定 `experiments.baseUrl`；未設定此值時，現有 Preview 與根路徑 Web 建置仍使用空 base path。
+- [x] 頁面、JavaScript 及 CSS 資源均能在 `/drawingdraft/` 子路徑載入；首頁、作品庫、學習角、工作室、比較、callback 和 `/manus-routes.json` 均可由其路徑開啟並回 HTTP 200。

@@ -51,7 +51,6 @@
 
 手機畫布是核心，Web 預覽用來檢查介面流程，並不等同於真機上的原生互動驗證。所有作品儲存在目前裝置；刪除或更換裝置不會自動同步。免費版本不包含已未選用的 AI 生成、AI 建議或跨裝置雲端作品庫。
 
-
 ## 瀏覽器版擴充
 
 在現有 Expo Router／React Native／TypeScript 專案加入同一套程式碼的 Expo Web 版本，不另建第二套 React 網站框架，也不更換手機原生 App。瀏覽器和手機共用首頁、作品庫、學習角、工作室、歷程比較頁和本機作品資料模型；使用 React Native Web、視窗寬度與 `Platform.OS` 調整版面。寬螢幕使用固定品牌側欄、桌面頁首、寬幅內容區與工作室雙欄布局；窄螢幕保留現有直向導覽與觸控友好操作。
@@ -67,19 +66,19 @@ Expo Web 靜態輸出沿用 `app.config.ts` 中 Metro bundler 與 `output: "stat
 - `app/(tabs)/index.tsx`、`projects.tsx`、`learn.tsx`、`studio.tsx`、`compare.tsx`：復用產品行為並拓寬桌面布局，工作室把紙張畫布和控制區並排。
 - `public/manus-routes.json`：聲明 Expo Router 所有頁面路由；原有 `assets/images/favicon.png` 保持為網站圖示。
 - `lib/studio.ts`、`components/studio/sketch-canvas.tsx`：保持共用作品結構、本機儲存與 SVG 繪畫資料；不另建瀏覽器帳戶或雲端資料庫。
-- `pnpm exec expo export --platform web` 產生靜態網站輸出 `dist/`；此次分別提供完整 Expo 原始碼 ZIP 與獨立的靜態 `dist/` ZIP。GitHub Pages 的子路徑由 `EXPO_BASE_URL=/drawingdraft` 設定；環境變數省略時，Preview 和一般根路徑輸出維持空 base path。
+- `pnpm exec expo export --platform web` 產生靜態網站輸出 `dist/`；提供完整 Expo 原始碼 ZIP 與獨立的靜態 `dist/` ZIP。GitHub Pages 的子路徑由 `EXPO_BASE_URL=/drawingdraft` 設定；環境變數省略時，Preview 和一般根路徑輸出維持空 base path。
 
-### GitHub Pages 部署方式
+### GitHub Pages 部署結果
 
-- 選用 GitHub Pages 而非 Vercel：目前儲存庫已公開且 Expo 專案使用 `output: "static"`，不需常駐伺服器。
-- `app.config.ts` 以 `experiments.baseUrl` 使用 `EXPO_BASE_URL`，GitHub Actions 建置時設為 `/drawingdraft`，使站點 `https://lp-drawing.github.io/drawingdraft/` 下的頁面路徑與資產網址帶有正確子路徑。
-- `.github/workflows/deploy-pages.yml` 在 `main` 更新或手動觸發時安裝固定 pnpm、執行 `pnpm build:web`、建立 `.nojekyll`、上傳 `dist/` artifact 並部署到 Pages；Pages 發布來源設為 GitHub Actions。
+- 選用 GitHub Pages 而非 Vercel：現有儲存庫已公開且 Expo 專案使用 `output: "static"`，不需常駐伺服器。
+- `app.config.ts` 以 `experiments.baseUrl` 使用 `EXPO_BASE_URL`；GitHub Actions 建置時設為 `/drawingdraft`，使路徑和資產在 `https://lp-drawing.github.io/drawingdraft/` 下正常運作。
+- `.github/workflows/deploy-pages.yml` 在 `main` 更新或手動觸發時安裝固定 pnpm、執行 `pnpm build:web`、建立 `.nojekyll`、上傳 `dist/` artifact 並部署到 Pages。Repository 的 Pages source 已設定為 GitHub Actions。
+- 首次 Actions run `42179731372` 已成功完成；2026-11-06 已確認公開首頁、主要 Expo Router 子頁、`/manus-routes.json`、CSS 與 JavaScript 資源都由正式網址回傳 HTTP 200。
 - 部署動作只讀取程式碼並使用最小 Pages/OIDC 權限；作品資料仍保存在訪客瀏覽器本機，不引入新的伺服器或使用者資料服務。
-
 
 ## 已落實的網頁版補充模組
 
 - `app/+html.tsx` 與 `app/_layout.tsx`：提供繁體中文文件語言、非空頁面標題、描述及主題色 metadata。
 - `lib/web-export.ts`：以 SVG 資料輸出瀏覽器 PNG 下載；系統支援 Web Share 時允許分享，否則保留下載退路，原生版維持 Expo Sharing。
-- `README_WEB.md`：提供 Expo Web 本機預覽、靜態建置、GitHub Pages 根路徑／子路徑差異，以及作品在目前瀏覽器本機保存的說明；此交付不建立或推送使用者的 GitHub repository。
+- `README_WEB.md`：提供正式網站網址、本機預覽、靜態建置、GitHub Pages 根路徑／子路徑差異，以及作品在目前瀏覽器本機保存的說明。網站程式位於使用者既有的 `lp-drawing/drawingdraft` 儲存庫；本次沒有建立新 repository。
 - 矮桌面視窗（高度低於 680px）縮短 Web 頁首並允許工作內容垂直捲動，避免工具與構圖輔助線被固定視窗裁切；OAuth callback 狀態提示改為繁體中文。
